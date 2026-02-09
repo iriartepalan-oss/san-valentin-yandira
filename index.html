@@ -2,15 +2,15 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>¿Pasas este día conmigo?</title>
+  <title>San Valentín 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Arial', sans-serif;
-      background: #f8c8dc; /* rosa pastel */
+      font-family: Arial, sans-serif;
+      background: #f8c8dc;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -22,7 +22,7 @@
       background: white;
       border-radius: 25px;
       padding: 20px;
-      max-width: 350px;
+      max-width: 360px;
       width: 90%;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -52,11 +52,11 @@
     .buttons {
       display: flex;
       justify-content: center;
-      gap: 10px;
+      margin-top: 15px;
     }
 
     button {
-      padding: 12px 18px;
+      padding: 14px 22px;
       font-size: 16px;
       border: none;
       border-radius: 30px;
@@ -79,23 +79,20 @@
       transform: scale(1.1);
     }
 
-    /* corazones flotando */
     .heart {
       position: fixed;
-      bottom: -20px;
-      font-size: 20px;
-      animation: floatUp 6s linear infinite;
-      color: #e75480;
-      opacity: 0.7;
+      font-size: 24px;
+      animation: explode 1.5s ease-out forwards;
+      pointer-events: none;
     }
 
-    @keyframes floatUp {
+    @keyframes explode {
       from {
-        transform: translateY(0);
+        transform: translate(0,0) scale(1);
         opacity: 1;
       }
       to {
-        transform: translateY(-110vh);
+        transform: translate(var(--x), var(--y)) scale(1.5);
         opacity: 0;
       }
     }
@@ -105,10 +102,12 @@
 <body>
 
   <div class="card">
-    <img src="foto.jpg" alt="Nosotros">
-    <h1>Yandira 💗</h1>
+    <img src="foto.jpg" alt="Andrés y Yandira">
+
+    <h1>💖</h1>
+
     <p>
-     Mi amor <strong>Yandira</strong>,<br><br>
+      Mi amor <strong>Yandira</strong>,<br><br>
       Este <strong>12 de febrero</strong> quiero invitarte  
       a pasar una noche especial conmigo ✨<br><br>
       ¿Aceptas ser mi San Valentín? 💖
@@ -122,9 +121,10 @@
   </div>
 
   <script>
-    // Botón NO que huye
     const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
 
+    // Botón NO huye
     noBtn.addEventListener("mouseover", () => {
       const x = Math.random() * (window.innerWidth - 100);
       const y = Math.random() * (window.innerHeight - 50);
@@ -132,25 +132,32 @@
       noBtn.style.top = y + "px";
     });
 
-    // Botón SÍ → WhatsApp con corazón ❤️
-    document.getElementById("yesBtn").addEventListener("click", () => {
-      window.location.href =
-        "https://wa.me/56991529509?text=Acepto ser tu San Valentin ❤️";
-    });
+    // Explosión de corazones
+    function explodeHearts(x, y) {
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "💖";
+        heart.style.left = x + "px";
+        heart.style.top = y + "px";
+        heart.style.setProperty("--x", (Math.random() * 300 - 150) + "px");
+        heart.style.setProperty("--y", (Math.random() * 300 - 150) + "px");
+        document.body.appendChild(heart);
 
-    // Corazones flotando
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerText = "💗";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = (Math.random() * 20 + 15) + "px";
-      document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1500);
+      }
+    }
+
+    // Click en SÍ
+    yesBtn.addEventListener("click", (e) => {
+      const rect = e.target.getBoundingClientRect();
+      explodeHearts(rect.left + rect.width / 2, rect.top);
 
       setTimeout(() => {
-        heart.remove();
-      }, 6000);
-    }, 400);
+        window.location.href =
+          "https://wa.me/56991529509?text=Acepto ser tu San Valentin ❤️";
+      }, 1600);
+    });
   </script>
 
 </body>
