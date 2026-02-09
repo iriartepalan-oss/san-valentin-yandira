@@ -69,17 +69,46 @@
       font-weight: bold;
     }
 
-    .heart {
-      position: fixed;
-      font-size: 24px;
-      animation: fly 2s linear forwards;
-    }
+  .heart {
+  position: fixed;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 30%, #fff, #ff5fa2);
+  transform: rotate(45deg);
+  animation: floatUp 2.5s ease-out forwards;
+  opacity: 0.9;
+}
 
-    @keyframes fly {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(-120px); opacity: 0; }
-    }
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: inherit;
+  border-radius: 50%;
+}
 
+.heart::before {
+  top: -9px;
+  left: 0;
+}
+
+.heart::after {
+  left: -9px;
+  top: 0;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(0.8) rotate(45deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-180px) scale(1.4) rotate(45deg);
+    opacity: 0;
+  }
+}
     .latido {
       animation: latido 1.5s infinite;
     }
@@ -110,9 +139,9 @@
     audio.volume = 0.2;
 
     const textoCompleto = `
-Mi amor <strong>Yandira</strong>,<br><br>
-Este <strong>12 de febrero</strong> quiero invitarte  
-a pasar una noche especial conmigo ✨<br><br>
+Mi amor Yandira,
+Este 12 de febrero quiero invitarte  
+a pasar una noche especial conmigo ✨
 ¿Aceptas ser mi San Valentín? 💖
 `;
 
@@ -155,7 +184,7 @@ a pasar una noche especial conmigo ✨<br><br>
 
       setTimeout(() => {
         window.location.href =
-          "https://wa.me/5691529509?text=❤️%20Sí%20acepto,%20mi%20amor";
+          "https://wa.me/56991529509?text=<3%20Sí%20acepto,%20mi%20amor";
       }, 1400);
     }
 
