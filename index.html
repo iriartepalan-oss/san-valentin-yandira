@@ -1,81 +1,93 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>San Valentín 💖</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>San Valentín 💖</title>
 
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #f8c8dc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-    }
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #f8c8dc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
 
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 20px;
-      text-align: center;
-      width: 90%;
-      max-width: 380px;
-      animation: pop 1s ease;
-    }
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 380px;
+  animation: pop 1s ease;
+}
 
-    @keyframes pop {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
-    .foto {
-      width: 100%;
-      border-radius: 15px;
-      margin-bottom: 15px;
-      opacity: 0;
-    }
+.foto {
+  width: 100%;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  opacity: 0;
+  transition: 1s;
+}
 
-    .texto {
-      font-size: 16px;
-      margin-bottom: 20px;
-      min-height: 120px;
-    }
+.texto {
+  font-size: 16px;
+  margin-bottom: 20px;
+  min-height: 120px;
+}
 
-    button {
-      padding: 12px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      margin: 5px;
-    }
+.latido {
+  animation: latido 1.5s infinite;
+}
 
-    .si {
-      background: #ff4d6d;
-      color: white;
-    }
+@keyframes latido {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
 
-    .no {
-      background: #ccc;
-      position: absolute;
-    }
+button {
+  padding: 12px 22px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 5px;
+}
 
-    .firma {
-      margin-top: 15px;
-      font-weight: bold;
-    }
+.si {
+  background: #ff4d6d;
+  color: white;
+}
 
-  .heart {
+.no {
+  background: #ccc;
+  position: absolute;
+}
+
+.firma {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+/* 💖 CORAZONES ELEGANTES */
+.heart {
   position: fixed;
   width: 18px;
   height: 18px;
   background: radial-gradient(circle at 30% 30%, #fff, #ff5fa2);
   transform: rotate(45deg);
-  animation: floatUp 2.5s ease-out forwards;
+  animation: floatUp 2.6s ease-out forwards;
   opacity: 0.9;
 }
 
@@ -100,105 +112,120 @@
 }
 
 @keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(0.8) rotate(45deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-180px) scale(1.4) rotate(45deg);
-    opacity: 0;
-  }
+  0% { transform: translateY(0) scale(0.8) rotate(45deg); opacity: 1; }
+  100% { transform: translateY(-200px) scale(1.5) rotate(45deg); opacity: 0; }
 }
-    .latido {
-      animation: latido 1.5s infinite;
-    }
 
-    @keyframes latido {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.03); }
-      100% { transform: scale(1); }
-    }
-  </style>
+/* 🌸 MENSAJE FINAL */
+.final {
+  font-size: 20px;
+  color: #ff4d6d;
+  font-weight: bold;
+  animation: pop 1s ease;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="card">
-    <img src="./foto.jpg.jpeg" class="foto" alt="Andrés y Yandira">
+<div class="card">
+  <img src="./foto.jpg.jpeg" class="foto" alt="Andrés y Yandira">
 
-    <div class="texto" id="texto"></div>
+  <div class="texto" id="texto"></div>
 
-    <button class="si" onclick="aceptar()">Sí 💘</button>
-    <button class="no" id="no">No 🙈</button>
+  <button class="si" onclick="aceptar()">Sí 💘</button>
+  <button class="no" id="no">No 🙈</button>
 
-    <div class="firma">Con amor, Andrés ❤️</div>
-  </div>
+  <div class="firma">Con amor, Andrés ❤️</div>
+</div>
 
-  <script>
-    const audio = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-soft-click-1125.mp3");
-    audio.volume = 0.2;
+<script>
+// 🎶 MÚSICA ROMÁNTICA
+const musica = new Audio("https://assets.mixkit.co/music/preview/mixkit-romantic-soft-piano-233.mp3");
+musica.volume = 0.4;
+musica.loop = true;
 
-    const textoCompleto = `
+// 🔊 SONIDO ESCRITURA
+const audio = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-soft-click-1125.mp3");
+audio.volume = 0.2;
+
+const textoCompleto = `
 Mi amor,
-Este 12 de febrero quiero invitarte  
+este 12 de febrero quiero invitarte  
 a pasar una noche especial conmigo ✨
-para reencontrarnos y amarnos,
-para celebrar nuestro dia...
-
+Para reencontrarnos, para celebrar nuestro día...
 ¿Aceptas ser mi San Valentín? 💖
 `;
 
-    const textoDiv = document.getElementById("texto");
-    const btnNo = document.getElementById("no");
-    const foto = document.querySelector(".foto");
+const textoDiv = document.getElementById("texto");
+const btnNo = document.getElementById("no");
+const foto = document.querySelector(".foto");
 
-    let i = 0;
-    const speed = 40;
+let i = 0;
+const speed = 40;
 
-    btnNo.addEventListener("mouseover", () => {
-      btnNo.style.top = Math.random() * window.innerHeight + "px";
-      btnNo.style.left = Math.random() * window.innerWidth + "px";
-    });
+// 🙈 BOTÓN NO ESCAPA
+btnNo.addEventListener("mouseover", () => {
+  btnNo.style.top = Math.random() * window.innerHeight + "px";
+  btnNo.style.left = Math.random() * window.innerWidth + "px";
+});
 
-    function escribirTexto() {
-      if (i < textoCompleto.length) {
-        textoDiv.innerHTML += textoCompleto.charAt(i);
-        audio.currentTime = 0;
-        audio.play();
-        i++;
-        setTimeout(escribirTexto, speed);
-      } else {
-        textoDiv.classList.add("latido");
-      }
-    }
+// ✍️ TEXTO ESCRIBIÉNDOSE
+function escribirTexto() {
+  if (i < textoCompleto.length) {
+    textoDiv.innerHTML += textoCompleto.charAt(i);
+    audio.currentTime = 0;
+    audio.play();
+    i++;
+    setTimeout(escribirTexto, speed);
+  } else {
+    textoDiv.classList.add("latido");
+  }
+}
 
-    function aceptar() {
-      if (navigator.vibrate) navigator.vibrate([200,100,200]);
+// 💖 ACEPTAR
+function aceptar() {
+  // 📳 VIBRACIÓN
+  if ("vibrate" in navigator) {
+    navigator.vibrate([300,150,300,150,500]);
+  }
 
-      for (let i = 0; i < 30; i++) {
-        const h = document.createElement("div");
-        h.className = "heart";
-        h.innerHTML = "❤️";
-        h.style.left = Math.random() * 100 + "vw";
-        h.style.bottom = "-20px";
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 2000);
-      }
+  // 🎶 MÚSICA
+  musica.currentTime = 0;
+  musica.play().catch(()=>{});
 
-      setTimeout(() => {
-        window.location.href =
-          "https://wa.me/56991529509?text=<3%20Sí%20acepto,%20mi%20amor";
-      }, 1400);
-    }
+  // 💗 CORAZONES
+  for (let i = 0; i < 30; i++) {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.bottom = "-30px";
+    h.style.animationDelay = Math.random() * 0.4 + "s";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 2700);
+  }
 
-    window.onload = () => {
-      setTimeout(() => {
-        foto.style.transition = "1s";
-        foto.style.opacity = 1;
-        escribirTexto();
-      }, 800);
-    };
-  </script>
+  // 💌 MENSAJE FINAL
+  setTimeout(() => {
+    textoDiv.classList.remove("latido");
+    textoDiv.innerHTML = "<div class='final'>Sabía que dirías que sí 💖</div>";
+  }, 1400);
+
+  // 💬 WHATSAPP
+  setTimeout(() => {
+    window.location.href =
+      "https://wa.me/56991529509?text=❤️%20Sí%20acepto,%20mi%20amor";
+  }, 2600);
+}
+
+// 🎬 INICIO
+window.onload = () => {
+  setTimeout(() => {
+    foto.style.opacity = 1;
+    escribirTexto();
+  }, 800);
+};
+</script>
 
 </body>
 </html>
