@@ -2,103 +2,92 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>San Valentín 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>San Valentín 💖</title>
 
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Arial', sans-serif;
+      min-height: 100vh;
       background: #f8c8dc;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      font-family: Arial, sans-serif;
       overflow: hidden;
     }
 
     .card {
       background: white;
-      border-radius: 25px;
       padding: 20px;
-      max-width: 360px;
-      width: 90%;
-      text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-      animation: tiktokIn 1s ease-out;
-    }
-
-    @keyframes tiktokIn {
-      from {
-        transform: scale(0.8) translateY(40px);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .card img {
-      width: 100%;
-      max-height: 280px;
-      object-fit: cover;
       border-radius: 20px;
+      text-align: center;
+      width: 90%;
+      max-width: 380px;
+      animation: pop 1s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .foto {
+      width: 100%;
+      border-radius: 15px;
       margin-bottom: 15px;
-      animation: pulse 2.5s infinite;
+      opacity: 0;
     }
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.03); }
-      100% { transform: scale(1); }
-    }
-
-    p {
-      color: #555;
+    .texto {
       font-size: 16px;
       margin-bottom: 20px;
-    }
-
-    .firma {
-      margin-top: 15px;
-      font-style: italic;
-      color: #e75480;
-      font-size: 15px;
+      min-height: 120px;
     }
 
     button {
-      padding: 14px 26px;
+      padding: 12px 20px;
       font-size: 16px;
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      background: #e75480;
-      color: white;
-      transition: transform 0.2s;
+      margin: 5px;
     }
 
-    button:hover {
-      transform: scale(1.1);
+    .si {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    .no {
+      background: #ccc;
+      position: absolute;
+    }
+
+    .firma {
+      margin-top: 15px;
+      font-weight: bold;
     }
 
     .heart {
       position: fixed;
       font-size: 24px;
-      animation: explode 1.5s ease-out forwards;
-      pointer-events: none;
+      animation: fly 2s linear forwards;
     }
 
-    @keyframes explode {
-      from {
-        transform: translate(0,0) scale(1);
-        opacity: 1;
-      }
-      to {
-        transform: translate(var(--x), var(--y)) scale(1.6);
-        opacity: 0;
-      }
+    @keyframes fly {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-120px); opacity: 0; }
+    }
+
+    .latido {
+      animation: latido 1.5s infinite;
+    }
+
+    @keyframes latido {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
     }
   </style>
 </head>
@@ -106,54 +95,77 @@
 <body>
 
   <div class="card">
-    <img src="foto.jpg.jpge" alt="Andrés y Yandira">
+    <img src="./foto.jpg.jpeg" class="foto" alt="Andrés y Yandira">
 
-    <p>
-      Mi amor <strong>Yandira</strong>,<br><br>
-      Este <strong>12 de febrero</strong> quiero invitarte  
-      a pasar una noche especial conmigo ✨<br><br>
-      ¿Aceptas ser mi San Valentín? 💖
-    </p>
+    <div class="texto" id="texto"></div>
 
-    <button id="yesBtn">Sí 💕</button>
+    <button class="si" onclick="aceptar()">Sí 💘</button>
+    <button class="no" id="no">No 🙈</button>
 
-    <div class="firma">
-      Con amor,<br>
-      <strong>Andrés 💘</strong>
-    </div>
+    <div class="firma">Con amor, Andrés ❤️</div>
   </div>
 
   <script>
-    const yesBtn = document.getElementById("yesBtn");
+    const audio = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-soft-click-1125.mp3");
+    audio.volume = 0.2;
 
-    function explodeHearts(x, y) {
-      for (let i = 0; i < 30; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerText = "💖";
-        heart.style.left = x + "px";
-        heart.style.top = y + "px";
-        heart.style.setProperty("--x", (Math.random() * 300 - 150) + "px");
-        heart.style.setProperty("--y", (Math.random() * 300 - 150) + "px");
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 1500);
+    const textoCompleto = `
+Mi amor <strong>Yandira</strong>,<br><br>
+Este <strong>12 de febrero</strong> quiero invitarte  
+a pasar una noche especial conmigo ✨<br><br>
+¿Aceptas ser mi San Valentín? 💖
+`;
+
+    const textoDiv = document.getElementById("texto");
+    const btnNo = document.getElementById("no");
+    const foto = document.querySelector(".foto");
+
+    let i = 0;
+    const speed = 40;
+
+    btnNo.addEventListener("mouseover", () => {
+      btnNo.style.top = Math.random() * window.innerHeight + "px";
+      btnNo.style.left = Math.random() * window.innerWidth + "px";
+    });
+
+    function escribirTexto() {
+      if (i < textoCompleto.length) {
+        textoDiv.innerHTML += textoCompleto.charAt(i);
+        audio.currentTime = 0;
+        audio.play();
+        i++;
+        setTimeout(escribirTexto, speed);
+      } else {
+        textoDiv.classList.add("latido");
       }
     }
 
-    yesBtn.addEventListener("click", (e) => {
-      // Vibración celular
-      if (navigator.vibrate) {
-        navigator.vibrate([200, 100, 200, 100, 300]);
-      }
+    function aceptar() {
+      if (navigator.vibrate) navigator.vibrate([200,100,200]);
 
-      const rect = e.target.getBoundingClientRect();
-      explodeHearts(rect.left + rect.width / 2, rect.top);
+      for (let i = 0; i < 30; i++) {
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "❤️";
+        h.style.left = Math.random() * 100 + "vw";
+        h.style.bottom = "-20px";
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 2000);
+      }
 
       setTimeout(() => {
         window.location.href =
-          "https://wa.me/5691529509?text=Acepto ser tu San Valentin❤️";
-      }, 1600);
-    });
+          "https://wa.me/5691529509?text=❤️%20Sí%20acepto,%20mi%20amor";
+      }, 1400);
+    }
+
+    window.onload = () => {
+      setTimeout(() => {
+        foto.style.transition = "1s";
+        foto.style.opacity = 1;
+        escribirTexto();
+      }, 800);
+    };
   </script>
 
 </body>
