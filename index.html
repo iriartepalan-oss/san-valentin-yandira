@@ -9,7 +9,7 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
       background: #f8c8dc;
       display: flex;
       justify-content: center;
@@ -25,9 +25,19 @@
       max-width: 360px;
       width: 90%;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      position: relative;
-      z-index: 2;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      animation: tiktokIn 1s ease-out;
+    }
+
+    @keyframes tiktokIn {
+      from {
+        transform: scale(0.8) translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
     }
 
     .card img {
@@ -36,11 +46,13 @@
       object-fit: cover;
       border-radius: 20px;
       margin-bottom: 15px;
+      animation: pulse 2.5s infinite;
     }
 
-    h1 {
-      color: #e75480;
-      margin-bottom: 10px;
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
     }
 
     p {
@@ -49,30 +61,22 @@
       margin-bottom: 20px;
     }
 
-    .buttons {
-      display: flex;
-      justify-content: center;
+    .firma {
       margin-top: 15px;
+      font-style: italic;
+      color: #e75480;
+      font-size: 15px;
     }
 
     button {
-      padding: 14px 22px;
+      padding: 14px 26px;
       font-size: 16px;
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    #yesBtn {
       background: #e75480;
       color: white;
-    }
-
-    #noBtn {
-      background: #ccc;
-      color: #333;
-      position: absolute;
+      transition: transform 0.2s;
     }
 
     button:hover {
@@ -92,7 +96,7 @@
         opacity: 1;
       }
       to {
-        transform: translate(var(--x), var(--y)) scale(1.5);
+        transform: translate(var(--x), var(--y)) scale(1.6);
         opacity: 0;
       }
     }
@@ -102,9 +106,7 @@
 <body>
 
   <div class="card">
-    <img src="foto.jpg" alt="Andrés y Yandira">
-
-    <h1>💖</h1>
+    <img src="foto.jpg.jpge" alt="Andrés y Yandira">
 
     <p>
       Mi amor <strong>Yandira</strong>,<br><br>
@@ -113,28 +115,19 @@
       ¿Aceptas ser mi San Valentín? 💖
     </p>
 
-    <div class="buttons">
-      <button id="yesBtn">Sí 💕</button>
-    </div>
+    <button id="yesBtn">Sí 💕</button>
 
-    <button id="noBtn">No 🙈</button>
+    <div class="firma">
+      Con amor,<br>
+      <strong>Andrés 💘</strong>
+    </div>
   </div>
 
   <script>
-    const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
 
-    // Botón NO huye
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 50);
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
-    });
-
-    // Explosión de corazones
     function explodeHearts(x, y) {
-      for (let i = 0; i < 25; i++) {
+      for (let i = 0; i < 30; i++) {
         const heart = document.createElement("div");
         heart.className = "heart";
         heart.innerText = "💖";
@@ -143,19 +136,22 @@
         heart.style.setProperty("--x", (Math.random() * 300 - 150) + "px");
         heart.style.setProperty("--y", (Math.random() * 300 - 150) + "px");
         document.body.appendChild(heart);
-
         setTimeout(() => heart.remove(), 1500);
       }
     }
 
-    // Click en SÍ
     yesBtn.addEventListener("click", (e) => {
+      // Vibración celular
+      if (navigator.vibrate) {
+        navigator.vibrate([200, 100, 200, 100, 300]);
+      }
+
       const rect = e.target.getBoundingClientRect();
       explodeHearts(rect.left + rect.width / 2, rect.top);
 
       setTimeout(() => {
         window.location.href =
-          "https://wa.me/56991529509?text=Acepto ser tu San Valentin ❤️";
+          "https://wa.me/5691529509?text=Acepto ser tu San Valentin❤️";
       }, 1600);
     });
   </script>
