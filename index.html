@@ -1,155 +1,156 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>San Valentín 💖</title>
+  <meta charset="UTF-8">
+  <title>¿Pasas este día conmigo?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #ff4b2b, #ff416c);
-  overflow: hidden;
-}
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: #f8c8dc; /* rosa pastel */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-.container {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .card {
+      background: white;
+      border-radius: 25px;
+      padding: 20px;
+      max-width: 350px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 2;
+    }
 
-.card {
-  background: rgba(0,0,0,0.35);
-  padding: 30px;
-  border-radius: 25px;
-  max-width: 420px;
-  text-align: center;
-  color: white;
-  box-shadow: 0 0 30px rgba(0,0,0,0.5);
-}
+    .card img {
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin-bottom: 15px;
+    }
 
-.card img {
-  width: 100%;
-  border-radius: 20px;
-  margin-bottom: 15px;
-}
+    h1 {
+      color: #e75480;
+      margin-bottom: 10px;
+    }
 
-h1 {
-  margin-bottom: 10px;
-}
+    p {
+      color: #555;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
 
-p {
-  font-size: 18px;
-}
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
 
-button {
-  margin: 10px;
-  padding: 15px 25px;
-  border-radius: 30px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.2s;
-}
+    button {
+      padding: 12px 18px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
 
-.yes {
-  background: #ffd6e0;
-  color: #c9184a;
-}
+    #yesBtn {
+      background: #e75480;
+      color: white;
+    }
 
-.no {
-  background: #6c757d;
-  color: white;
-  position: absolute;
-}
+    #noBtn {
+      background: #ccc;
+      color: #333;
+      position: absolute;
+    }
 
-button:hover {
-  transform: scale(1.1);
-}
+    button:hover {
+      transform: scale(1.1);
+    }
 
-#response {
-  margin-top: 20px;
-  font-size: 20px;
-  font-weight: bold;
-}
+    /* corazones flotando */
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      color: #e75480;
+      opacity: 0.7;
+    }
 
-/* corazones */
-.heart {
-  position: fixed;
-  color: pink;
-  font-size: 20px;
-  animation: float 6s linear infinite;
-}
-
-@keyframes float {
-  0% { transform: translateY(100vh); opacity: 1; }
-  100% { transform: translateY(-10vh); opacity: 0; }
-}
-</style>
+    @keyframes floatUp {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- Música -->
-<audio autoplay loop>
-  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
-</audio>
-
-<div class="container">
   <div class="card">
-    <!-- FOTO (reemplaza el link por una de ustedes) -->
-    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e" alt="Nosotros">
-
-    <h1>💘 Invitación Especial 💘</h1>
-
+    <img src="foto.jpg" alt="Andrés y Yandira">
+    <h1>Yandira 💗</h1>
     <p>
-      Mi amor <strong>Yandira</strong>,<br><br>
-      Este <strong>12 de febrero</strong> quiero invitarte  
-      a pasar una noche especial conmigo ✨<br><br>
-      ¿Aceptas ser mi San Valentín? 💖
+      Amor...tengo una pregunta muy importante para ti…
+      <br><br>
+      ¿Te gustaría pasar este día conmigo?
     </p>
 
-    <button class="yes" onclick="accept()">💖 Sí, acepto</button>
-    <button class="no" id="noBtn">💔 No</button>
+    <div class="buttons">
+      <button id="yesBtn">Sí 💕</button>
+    </div>
 
-    <div id="response"></div>
+    <button id="noBtn">No 🙈</button>
   </div>
-</div>
 
-<script>
-// Botón NO que se escapa
-const noBtn = document.getElementById("noBtn");
-noBtn.addEventListener("mouseover", () => {
-  const x = Math.random() * (window.innerWidth - 100);
-  const y = Math.random() * (window.innerHeight - 50);
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
-});
+  <script>
+    // Botón NO que huye
+    const noBtn = document.getElementById("noBtn");
 
-// Aceptar
-function accept() {
-  document.getElementById("response").innerHTML =
-    "🥰 Sabía que dirías que sí 💖<br>Prepárate para una noche inolvidable ✨";
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 50);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    });
 
-  setTimeout(() => {
-    window.location.href =
-      "https://wa.me/56991529509?text=Sí%20acepto%20ser%20tu%20San%20Valentín%20💖";
-  }, 3000);
-}
+    // Botón SÍ → WhatsApp con corazón ❤️
+    document.getElementById("yesBtn").addEventListener("click", () => {
+      window.location.href =
+        "https://wa.me/56991529509?text=❤️";
+    });
 
-// Corazones flotando
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "💖";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 10 + "px";
-  document.body.appendChild(heart);
+    // Corazones flotando
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "💗";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+      document.body.appendChild(heart);
 
-  setTimeout(() => heart.remove(), 6000);
-}, 300);
-</script>
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }, 400);
+  </script>
 
 </body>
 </html>
