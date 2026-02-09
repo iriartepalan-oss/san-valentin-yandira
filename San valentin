@@ -134,7 +134,7 @@ function accept() {
 
   setTimeout(() => {
     window.location.href =
-      "https://wa.me/569XXXXXXXX?text=Sí%20acepto%20ser%20tu%20San%20Valentín%20💖";
+      "https://wa.me/56991529509?text=Sí%20acepto%20ser%20tu%20San%20Valentín%20💖";
   }, 3000);
 }
 
